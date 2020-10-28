@@ -1,220 +1,155 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<configuration scan="true" scanPeriod="10 seconds" debug="true">
-	<property name="PERF_LOG_DIR" value="${override.log.dir.perf}" />
-	<property name="PERF_IBE_LOG_DIR" value="${override.log.dir.perf}" />
-	<property name="PERF_HTTP_LOG_DIR" value="${override.log.dir.perf}" />
-	<property name="ROOT_LOG_DIR" value="${override.log.dir.root}" />
-	<property name="CMD_LOG_DIR" value="${override.log.dir.cmd}" />
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="10 seconds">
+	<!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+	<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+	<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+	<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
 
-	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+	<contextName>logback</contextName>
+	<!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+	<property name="log.path" value="D:/questionnaire_log/edu" />
+
+	<!-- 彩色日志 -->
+	<!-- 配置格式变量：CONSOLE_LOG_PATTERN 彩色日志格式 -->
+	<!-- magenta:洋红  boldMagenta:粗红  cyan:青色   white:白色  magenta:洋红 -->
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
+
+	<!--输出到控制台-->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+		<!-- 例如：如果此处配置了INFO级别，则后面其他位置即使配置了DEBUG级别的日志，也不会被输出 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
 		<encoder>
-			<pattern>--|%X{TraceID}|%X{hostIP}|%date{yyyy-MM-dd HH:mm:ss}[%level][%thread]%logger{60}-%msg%n</pattern>
+			<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+			<!-- 设置字符集 -->
+			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
 
-	<!-- ota-perftrace.log PerfTrace logger Appender -->
-	<appender name="PerfTraceDailyAndSizeRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${PERF_LOG_DIR}/ota_perftrace.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${PERF_LOG_DIR}/%d{yyyy/MM,aux}/ota_perftrace.%d{yyyyMMdd}.%i.log.zip
-			</fileNamePattern>
-			<maxFileSize>200MB</maxFileSize>
-			<maxHistory>3</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
-		</encoder>
-	</appender>
-	<!-- Http PerfTrace logger Appender -->
-	<appender name="HTTPPerfTraceDailyAndSizeRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${PERF_HTTP_LOG_DIR}/ota_http_perftrace.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${PERF_HTTP_LOG_DIR}/%d{yyyy/MM,aux}/ota_http_perftrace.%d{yyyyMMdd}.%i.log.zip
-			</fileNamePattern>
-			<!-- or whenever the file size reaches 200MB -->
-			<maxFileSize>200MB</maxFileSize>
-			<maxHistory>3</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
-		</encoder>
-	</appender>
-	<!-- ota_ibe_perftrace.log PerfTrace logger Appender -->
-	<appender name="IBEPerfTraceDailyAndSizeRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${PERF_IBE_LOG_DIR}/ota_ibe_perftrace.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${PERF_IBE_LOG_DIR}/%d{yyyy/MM,aux}/ota_ibe_perftrace.%d{yyyyMMdd}.%i.log.zip
-			</fileNamePattern>
-			<maxFileSize>200MB</maxFileSize>
-			<maxHistory>60</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
-		</encoder>
-	</appender>
+	<!--输出到文件-->
 
-	<!--ota_root.log Root logger Appender -->
-	<appender name="RootDailyAndSizeRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${ROOT_LOG_DIR}/ota_root.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>${ROOT_LOG_DIR}/%d{yyyy/MM,aux}/ota_root.%i.%d{yyyy-MM-dd}.log.zip
-			</fileNamePattern>
-			<maxFileSize>200MB</maxFileSize>
-			<maxHistory>90</maxHistory>
-		</rollingPolicy>
+	<!-- 时间滚动输出 level为 INFO 日志 -->
+	<appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 正在记录的日志文件的路径及文件名 -->
+		<file>${log.path}/log_info.log</file>
+		<!--日志文件输出格式-->
 		<encoder>
-			<pattern>--|%X{TraceID}|%X{hostIP}|%date{yyyy-MM-dd	HH:mm:ss}[%level][%thread][%logger]-%msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset>
 		</encoder>
-	</appender>
-
-	<!-- OtaCmd OtaCmdSiftAppender -->
-	<appender name="OtaCmdSiftAppender" class="ch.qos.logback.classic.sift.SiftingAppender">
-		<discriminator>
-			<Key>IBEPLUS_CMD_NAME</Key>
-			<DefaultValue>unknown_cmd</DefaultValue>
-		</discriminator>
-		<sift>
-			<appender name="OtaCmdRolling-${IBEPLUS_CMD_NAME}"
-				class="ch.qos.logback.core.rolling.RollingFileAppender">
-				<file>${CMD_LOG_DIR}/${IBEPLUS_CMD_NAME}/${IBEPLUS_CMD_NAME}.log
-				</file>
-				<rollingPolicy
-					class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-					<!-- rollover daily -->
-					<fileNamePattern>${CMD_LOG_DIR}/${IBEPLUS_CMD_NAME}/${IBEPLUS_CMD_NAME}.%d{yyyyMMdd}.%i.log.zip
-					</fileNamePattern>
-					<maxFileSize>100MB</maxFileSize>
-					<!-- <maxHistory>31</maxHistory> -->
-				</rollingPolicy>
-				<encoder>
-					<pattern>%msg|%X{TraceID}%n</pattern>
-				</encoder>
-			</appender>
-		</sift>
-	</appender>
-
-	<!--audit.log IbePlusAuditDailyRollAppender -->
-	<appender name="IbePlusAuditDailyRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.IbePlusAuditLogRollingPolicy">
-			<fileNamePattern>${AUDIT_LOG_DIR}/OTA.%d{yyyyMMddHH}.audit.%i.log
-			</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>500MB</maxFileSize>
+		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 每天日志归档路径以及格式 -->
+			<fileNamePattern>${log.path}/info/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
+			<!--日志文件保留天数-->
+			<maxHistory>15</maxHistory>
 		</rollingPolicy>
-		<encoder>
-			<pattern>%X{start}%d{yyyyMMddHHmmss:SSS}.%X{hostName}!%X{appName}:%X{moduleName}.%X{processId},%X{threadID}#%X{TraceID}%X{Cid}%X{SessionID}*^:%X{LOG_LEVEL}>%X{end}%X{extend}%X{end}%msg%X{end}
-			</pattern>
-		</encoder>
+		<!-- 此日志文件只记录info级别的 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
 	</appender>
 
-	<!-- Stat logger Appender -->
-	<appender name="StatDailyAndSizeRollAppender"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${ROOT_LOG_DIR}/ota_statm.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${ROOT_LOG_DIR}/%d{yyyy/MM,aux}/ota_statm.%d{yyyyMMdd}.%i.log.zip
-			</fileNamePattern>
-			<maxFileSize>200MB</maxFileSize>
-			<maxHistory>3</maxHistory>
-		</rollingPolicy>
+	<!-- 时间滚动输出 level为 WARN 日志 -->
+	<appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 正在记录的日志文件的路径及文件名 -->
+		<file>${log.path}/log_warn.log</file>
+		<!--日志文件输出格式-->
 		<encoder>
-			<pattern>%msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
 		</encoder>
+		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/warn/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!--日志文件保留天数-->
+			<maxHistory>15</maxHistory>
+		</rollingPolicy>
+		<!-- 此日志文件只记录warn级别的 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>warn</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
 	</appender>
 
+	<!-- 时间滚动输出 level为 ERROR 日志 -->
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 正在记录的日志文件的路径及文件名 -->
+		<file>${log.path}/log_error.log</file>
+		<!--日志文件输出格式-->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+		<!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!--日志文件保留天数-->
+			<maxHistory>15</maxHistory>
+		</rollingPolicy>
+		<!-- 此日志文件只记录ERROR级别的 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
 
-	<logger name="com.travelsky.ibeplus.perftrace" level="INFO"
-		additivity="false">
-		<appender-ref ref="PerfTraceDailyAndSizeRollAppender" />
-	</logger>
+	<!--
+        使用mybatis的时候，sql语句是debug下才会打印，而这里我们只配置了info，所以想要查看sql语句的话，有以下两种操作：
+        第一种把<root level="INFO">改成<root level="DEBUG">这样就会打印sql，不过这样日志那边会出现很多其他消息
+        第二种就是单独给mapper下目录配置DEBUG模式，代码如下，这样配置sql语句会打印，其他还是正常DEBUG级别：
+     -->
+	<!--开发环境:打印控制台-->
+	<springProfile name="dev">
+		<!--可以输出项目中的debug日志，包括mybatis的sql日志-->
+		<!--
+            <logger>用来设置某一个包或者具体的某一个类的日志打印级别、以及指定<appender>。
+            <logger>仅有一个name属性，一个可选的level和一个可选的addtivity属性。
+            name:用来指定受此logger约束的某一个包或者具体的某一个类。
+            level:用来设置打印级别，如果未设置此属性，那么当前logger将会继承上级的级别。
+        -->
+		<logger name="com.freefly" level="INFO" />
 
-	<!-- IBEPerfTrace Logger -->
-	<logger name="com.travelsky.ibeplus.ibe.perftrace" level="INFO"
-		additivity="false">
-		<appender-ref ref="IBEPerfTraceDailyAndSizeRollAppender" />
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-		${override.log.develop.consoleAppenderRef}
-	</logger>
-	<!-- S1PerfTrace Logger -->
-	<logger name="com.travelsky.ota.util.httpclient"
-		level="INFO" additivity="false">
-		<appender-ref ref="HTTPPerfTraceDailyAndSizeRollAppender" />
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-		${override.log.develop.consoleAppenderRef}
-	</logger>
-	<!-- OtaCmd Logger -->
-	<logger name="com.travelsky.ibeplus.cmd.CmdLogger" level="INFO"
-		additivity="false">
-		<appender-ref ref="OtaCmdSiftAppender" />
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-		${override.log.develop.consoleAppenderRef}
-	</logger>
-
-	<!-- Business Logger -->
-	<logger name="com.travelsky.ibeplus.business.log" level="INFO"
-		additivity="false">
-		<appender-ref ref="BusinessLogSiftAppender" />
-	</logger>
-
-	<!-- Stat Logger -->
-	<logger name="org.googlecode.statmonitor.statlog" level="INFO"
-		additivity="false">
-		<appender-ref ref="StatDailyAndSizeRollAppender" />
-	</logger>
-
-	<!-- Audit Logger -->
-
-	<logger name="ibeplus.audit.log" level="INFO" additivity="false">
-		<appender-ref ref="IbePlusAuditDailyRollAppender" />
-	</logger>
+		<!--
+            root节点是必选节点，用来指定最基础的日志输出级别，只有一个level属性
+            level:用来设置打印级别，大小写无关：TRACE < DEBUG < INFO < WARN < ERROR ALL 和 OFF，默认是DEBUG
+            可以包含零个或多个appender元素。
+        -->
+		<root level="INFO">
+			<appender-ref ref="CONSOLE" />
+			<appender-ref ref="INFO_FILE" />
+			<appender-ref ref="WARN_FILE" />
+			<appender-ref ref="ERROR_FILE" />
+		</root>
+	</springProfile>
 
 
-	<logger name="com.travelsky.rmilbclient.RmiProxy" level="INFO"></logger>
+	<!--生产环境:输出到文件-->
+	<springProfile name="pro">
 
-	<logger name="com.travelsky.ibeplus.pool.ibe.impl.IBEManagerPropFileImpl"
-		level="INFO" />
-
-	<!-- ribbon loadbalancer -->
-	<logger name="com.netflix.loadbalancer.reactive.LoadBalancerCommand"
-		level="DEBUG">
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-		${override.log.develop.consoleAppenderRef}
-	</logger>
-
-	<logger name="com.netflix.loadbalancer.WeightedResponseTimeRule"
-		level="ERROR">
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-	</logger>
-	<logger name="com.netflix.loadbalancer.BaseLoadBalancer" level="ERROR">
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-	</logger>
-	<logger name="com.netflix.loadbalancer.DynamicServerListLoadBalancer"
-		level="ERROR">
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-	</logger>
-	<logger name="org.ibeplus.perftrace.TimingLogger" level="ERROR" />
-	<logger name="com.travelsky.ibeplus.flowmanager.ActionFlowManagerImpl" level="${override.log.ota.level}" />
-	<!-- Root Logger -->
-	<root level="${override.log.rootlogger.level}">
-		<appender-ref ref="RootDailyAndSizeRollAppender" />
-		${override.log.develop.consoleAppenderRef}
-	</root>
+		<root level="INFO">
+			<appender-ref ref="CONSOLE" />
+			<appender-ref ref="DEBUG_FILE" />
+			<appender-ref ref="INFO_FILE" />
+			<appender-ref ref="ERROR_FILE" />
+			<appender-ref ref="WARN_FILE" />
+		</root>
+	</springProfile>
 
 </configuration>

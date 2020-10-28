@@ -19,6 +19,7 @@ server:
       protocol-header: X-forwarded-Proto
     connection-timeout: 20s
 
+
 #
 spring:
   aop:
@@ -37,9 +38,9 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 60s
 
-spring:
-  devtools:
-    add-properties: false
+#spring:
+#  devtools:
+#    add-properties: false
 
 # swagger配置
 swagger:
