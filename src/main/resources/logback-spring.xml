@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="10 seconds" debug="true">
+	<property name="PERF_LOG_DIR" value="${override.log.dir.perf}" />
+	<property name="PERF_IBE_LOG_DIR" value="${override.log.dir.perf}" />
+	<property name="PERF_HTTP_LOG_DIR" value="${override.log.dir.perf}" />
+	<property name="ROOT_LOG_DIR" value="${override.log.dir.root}" />
+	<property name="CMD_LOG_DIR" value="${override.log.dir.cmd}" />
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>--|%X{TraceID}|%X{hostIP}|%date{yyyy-MM-dd HH:mm:ss}[%level][%thread]%logger{60}-%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- ota-perftrace.log PerfTrace logger Appender -->
+	<appender name="PerfTraceDailyAndSizeRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${PERF_LOG_DIR}/ota_perftrace.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${PERF_LOG_DIR}/%d{yyyy/MM,aux}/ota_perftrace.%d{yyyyMMdd}.%i.log.zip
+			</fileNamePattern>
+			<maxFileSize>200MB</maxFileSize>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- Http PerfTrace logger Appender -->
+	<appender name="HTTPPerfTraceDailyAndSizeRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${PERF_HTTP_LOG_DIR}/ota_http_perftrace.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${PERF_HTTP_LOG_DIR}/%d{yyyy/MM,aux}/ota_http_perftrace.%d{yyyyMMdd}.%i.log.zip
+			</fileNamePattern>
+			<!-- or whenever the file size reaches 200MB -->
+			<maxFileSize>200MB</maxFileSize>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- ota_ibe_perftrace.log PerfTrace logger Appender -->
+	<appender name="IBEPerfTraceDailyAndSizeRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${PERF_IBE_LOG_DIR}/ota_ibe_perftrace.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${PERF_IBE_LOG_DIR}/%d{yyyy/MM,aux}/ota_ibe_perftrace.%d{yyyyMMdd}.%i.log.zip
+			</fileNamePattern>
+			<maxFileSize>200MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%X{TraceID}|%X{hostIP}|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--ota_root.log Root logger Appender -->
+	<appender name="RootDailyAndSizeRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${ROOT_LOG_DIR}/ota_root.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${ROOT_LOG_DIR}/%d{yyyy/MM,aux}/ota_root.%i.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+			<maxFileSize>200MB</maxFileSize>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>--|%X{TraceID}|%X{hostIP}|%date{yyyy-MM-dd	HH:mm:ss}[%level][%thread][%logger]-%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- OtaCmd OtaCmdSiftAppender -->
+	<appender name="OtaCmdSiftAppender" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<Key>IBEPLUS_CMD_NAME</Key>
+			<DefaultValue>unknown_cmd</DefaultValue>
+		</discriminator>
+		<sift>
+			<appender name="OtaCmdRolling-${IBEPLUS_CMD_NAME}"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${CMD_LOG_DIR}/${IBEPLUS_CMD_NAME}/${IBEPLUS_CMD_NAME}.log
+				</file>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<!-- rollover daily -->
+					<fileNamePattern>${CMD_LOG_DIR}/${IBEPLUS_CMD_NAME}/${IBEPLUS_CMD_NAME}.%d{yyyyMMdd}.%i.log.zip
+					</fileNamePattern>
+					<maxFileSize>100MB</maxFileSize>
+					<!-- <maxHistory>31</maxHistory> -->
+				</rollingPolicy>
+				<encoder>
+					<pattern>%msg|%X{TraceID}%n</pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+
+	<!--audit.log IbePlusAuditDailyRollAppender -->
+	<appender name="IbePlusAuditDailyRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.IbePlusAuditLogRollingPolicy">
+			<fileNamePattern>${AUDIT_LOG_DIR}/OTA.%d{yyyyMMddHH}.audit.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>500MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%X{start}%d{yyyyMMddHHmmss:SSS}.%X{hostName}!%X{appName}:%X{moduleName}.%X{processId},%X{threadID}#%X{TraceID}%X{Cid}%X{SessionID}*^:%X{LOG_LEVEL}>%X{end}%X{extend}%X{end}%msg%X{end}
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Stat logger Appender -->
+	<appender name="StatDailyAndSizeRollAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${ROOT_LOG_DIR}/ota_statm.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${ROOT_LOG_DIR}/%d{yyyy/MM,aux}/ota_statm.%d{yyyyMMdd}.%i.log.zip
+			</fileNamePattern>
+			<maxFileSize>200MB</maxFileSize>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<logger name="com.travelsky.ibeplus.perftrace" level="INFO"
+		additivity="false">
+		<appender-ref ref="PerfTraceDailyAndSizeRollAppender" />
+	</logger>
+
+	<!-- IBEPerfTrace Logger -->
+	<logger name="com.travelsky.ibeplus.ibe.perftrace" level="INFO"
+		additivity="false">
+		<appender-ref ref="IBEPerfTraceDailyAndSizeRollAppender" />
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+		${override.log.develop.consoleAppenderRef}
+	</logger>
+	<!-- S1PerfTrace Logger -->
+	<logger name="com.travelsky.ota.util.httpclient"
+		level="INFO" additivity="false">
+		<appender-ref ref="HTTPPerfTraceDailyAndSizeRollAppender" />
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+		${override.log.develop.consoleAppenderRef}
+	</logger>
+	<!-- OtaCmd Logger -->
+	<logger name="com.travelsky.ibeplus.cmd.CmdLogger" level="INFO"
+		additivity="false">
+		<appender-ref ref="OtaCmdSiftAppender" />
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+		${override.log.develop.consoleAppenderRef}
+	</logger>
+
+	<!-- Business Logger -->
+	<logger name="com.travelsky.ibeplus.business.log" level="INFO"
+		additivity="false">
+		<appender-ref ref="BusinessLogSiftAppender" />
+	</logger>
+
+	<!-- Stat Logger -->
+	<logger name="org.googlecode.statmonitor.statlog" level="INFO"
+		additivity="false">
+		<appender-ref ref="StatDailyAndSizeRollAppender" />
+	</logger>
+
+	<!-- Audit Logger -->
+
+	<logger name="ibeplus.audit.log" level="INFO" additivity="false">
+		<appender-ref ref="IbePlusAuditDailyRollAppender" />
+	</logger>
+
+
+	<logger name="com.travelsky.rmilbclient.RmiProxy" level="INFO"></logger>
+
+	<logger name="com.travelsky.ibeplus.pool.ibe.impl.IBEManagerPropFileImpl"
+		level="INFO" />
+
+	<!-- ribbon loadbalancer -->
+	<logger name="com.netflix.loadbalancer.reactive.LoadBalancerCommand"
+		level="DEBUG">
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+		${override.log.develop.consoleAppenderRef}
+	</logger>
+
+	<logger name="com.netflix.loadbalancer.WeightedResponseTimeRule"
+		level="ERROR">
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+	</logger>
+	<logger name="com.netflix.loadbalancer.BaseLoadBalancer" level="ERROR">
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+	</logger>
+	<logger name="com.netflix.loadbalancer.DynamicServerListLoadBalancer"
+		level="ERROR">
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+	</logger>
+	<logger name="org.ibeplus.perftrace.TimingLogger" level="ERROR" />
+	<logger name="com.travelsky.ibeplus.flowmanager.ActionFlowManagerImpl" level="${override.log.ota.level}" />
+	<!-- Root Logger -->
+	<root level="${override.log.rootlogger.level}">
+		<appender-ref ref="RootDailyAndSizeRollAppender" />
+		${override.log.develop.consoleAppenderRef}
+	</root>
+
+</configuration>
