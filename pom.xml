@@ -8,6 +8,7 @@
         <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.freefly</groupId>
     <artifactId>questionnaire</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -22,6 +23,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,20 +66,62 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.2.7.RELEASE</version>
-        </dependency>
     </dependencies>
 
+    <!--分别设置开发，测试，生产环境-->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active>dev</spring.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.active>test</spring.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <spring.active>pro</spring.active>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <finalName>questionnaire</finalName>
+        <resources>
+            <resource>
+                <!--指定资源路径-->
+                <directory>${project.basedir}/src/main/resources</directory>
+                <!--这个声明是否需要替换-->
+                <filtering>true</filtering>
+                <includes>
+                    <!--指定打包时候要包含的文件，这里的变量在打包时候会被替换-->
+                    <include>application-${spring.active}.yml</include>
+                </includes>
+                <!--  <targetPath>${basedir}/target/classes</targetPath>-->
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--repackage：创建一个自动可执行的jar或war文件。它可以替换常规的artifact，
+                    或者用一个单独的classifier附属在maven构建的生命周期中。-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

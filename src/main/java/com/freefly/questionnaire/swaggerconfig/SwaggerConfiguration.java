@@ -1,4 +1,4 @@
-package com.freefly.questionnaire.swaggerConfig;
+package com.freefly.questionnaire.swaggerconfig;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
@@ -23,15 +23,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-//@EnableKnife4j
-@Import(BeanValidatorPluginsConfiguration.class)
+@EnableKnife4j
 public class SwaggerConfiguration {
     @Bean(value = "defaultApi2")
     public Docket defaultApi2() {
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 //分组名称
-                .groupName("2.X版本")
+                .groupName("1.0版本")
                 .select()
                 //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage("com.freefly.questionnaire.controller"))
@@ -42,9 +41,9 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("swagger-bootstrap-ui很棒~~~！！！")
-                .description("swagger-bootstrap-ui-demo RESTful APIs")
-//                .termsOfServiceUrl("http://www.group.com/")
+                .title("Questionnaire接口文档！！！")
+                .description("Questionnaire 问卷调查 接口文档！！！")
+                .termsOfServiceUrl("http://localhost:9999/")
 //                .contact("123@qq.com")
                 .version("1.0")
                 .build();

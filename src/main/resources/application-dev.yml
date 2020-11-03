@@ -1,11 +1,11 @@
 server:
-  port: ${override.server.port}
-#  优化关闭
+  port: 8080
+  #  优化关闭
   shutdown: graceful
   servlet:
-    context-path: ${override.server.servlet.context-path}
+    context-path: /questionnaire
   tomcat:
-    baseDir: ${override.server.tomcat.baseDir}
+    baseDir: /DATA/app/ibeplus-springboot-questionnaire
     accesslog:
       enabled: true
       max-days: 3
@@ -13,14 +13,13 @@ server:
     accept-count: 1500
     min-spare-threads: 50
     protocol: org.apache.coyote.http11.Http11Nio2Protocol
-    remoteip:
-      internal-proxies: ${override.server.tomcat.internal-proxies}
-      remote-ip-header: x-forwarded-for
-      protocol-header: X-forwarded-Proto
+    #    remoteip:
+    #      internal-proxies: ${override.server.tomcat.internal-proxies}
+    #      remote-ip-header: x-forwarded-for
+    #      protocol-header: X-forwarded-Proto
     connection-timeout: 20s
 
-
-#
+  #
 spring:
   aop:
     auto: true
@@ -37,10 +36,6 @@ spring:
       enabled: false
   lifecycle:
     timeout-per-shutdown-phase: 60s
-
-#spring:
-#  devtools:
-#    add-properties: false
 
 # swagger配置
 swagger:

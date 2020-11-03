@@ -1,0 +1,42 @@
+server:
+  port: 8082
+  #  优化关闭
+  shutdown: graceful
+  servlet:
+    context-path: /questionnaire
+  tomcat:
+    baseDir: /DATA/app/ibeplus-springboot-questionnaire
+    accesslog:
+      enabled: true
+      max-days: 3
+    max-threads:  1500
+    accept-count: 1500
+    min-spare-threads: 50
+    protocol: org.apache.coyote.http11.Http11Nio2Protocol
+    #    remoteip:
+    #      internal-proxies: ${override.server.tomcat.internal-proxies}
+    #      remote-ip-header: x-forwarded-for
+    #      protocol-header: X-forwarded-Proto
+    connection-timeout: 20s
+
+  #
+spring:
+  aop:
+    auto: true
+    proxy-target-class: false
+  mvc:
+    formcontent:
+      filter:
+        enabled: false
+    hiddenmethod:
+      filter:
+        enabled: false
+  http:
+    encoding:
+      enabled: false
+  lifecycle:
+    timeout-per-shutdown-phase: 60s
+
+# swagger配置
+swagger:
+  markdowns: classpath:markdown/*
