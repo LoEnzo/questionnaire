@@ -37,6 +37,10 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 60s
 
-# swagger配置
-swagger:
-  markdowns: classpath:markdown/*
+
+knife4j:
+  basic:
+    enable: false
+    username: hjwu
+    password: 123123
+  enable: false

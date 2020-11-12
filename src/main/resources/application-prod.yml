@@ -36,7 +36,3 @@ spring:
       enabled: false
   lifecycle:
     timeout-per-shutdown-phase: 60s
-
-# swagger配置
-swagger:
-  markdowns: classpath:markdown/*
