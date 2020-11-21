@@ -1,6 +1,7 @@
-package com.freefly.questionnaire.controller.user;
+package com.freefly.questionnaire.controller;
 
 import com.freefly.questionnaire.dto.User;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/users")
+@Api(tags = "用户信息")
 public class UserController {
 
     /**
