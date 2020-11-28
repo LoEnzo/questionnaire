@@ -16,12 +16,12 @@ import org.apache.ibatis.type.Alias;
 @Getter
 @Setter
 @Alias("SurveyQuestion")
-public class SurveyQuestion {
+public class SurveyQuestionOption {
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty(value = "问题id")
     private int id;
 
-    @ApiModelProperty(value = "问题")
+    @ApiModelProperty(value = "问题的题目")
     private String title;
 
     @ApiModelProperty(value = "问题的类型")
@@ -32,4 +32,7 @@ public class SurveyQuestion {
 
     @ApiModelProperty(value = "问题是否必填，0：非必填，1：必填")
     private int optional;
+
+    @ApiModelProperty(value = "问题的答案")
+    private SurveyAnswerOption surveyAnswer;
 }

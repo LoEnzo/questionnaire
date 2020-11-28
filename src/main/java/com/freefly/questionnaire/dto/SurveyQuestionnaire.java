@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * ProjectName:
@@ -19,9 +18,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Alias("Questionnaire")
-public class Questionnaire {
+public class SurveyQuestionnaire {
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty(value = "问卷表id")
     private int id;
 
     @ApiModelProperty(value = "问卷标题")

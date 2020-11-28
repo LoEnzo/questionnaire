@@ -1,6 +1,6 @@
 package com.freefly.questionnaire.controller;
 
-import com.freefly.questionnaire.dto.Questionnaire;
+import com.freefly.questionnaire.dto.SurveyQuestionnaire;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuestionnaireController {
 
     @GetMapping(value = "/{questNaId}")
-    public Questionnaire queryQuestionnaire(@PathVariable String questNaId) {
-        return new Questionnaire();
+    public SurveyQuestionnaire queryQuestionnaire(@PathVariable String questNaId) {
+        return new SurveyQuestionnaire();
     }
 }

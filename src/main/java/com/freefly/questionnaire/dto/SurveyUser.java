@@ -15,10 +15,10 @@ import org.apache.ibatis.type.Alias;
  */
 @Getter
 @Setter
-@Alias("User")
-public class User {
+@Alias("SurveyUser")
+public class SurveyUser {
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty(value = "用户id")
     private int id;
 
     @ApiModelProperty(value = "用户名")

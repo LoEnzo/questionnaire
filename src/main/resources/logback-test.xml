@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <contextName>springbootlog</contextName>
+    <contextName>QestionnaireLog</contextName>
 
     <property name="BASE_LOG_HOME" value="D:\\questionnaire_log"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,10 +11,10 @@
     </appender>
     <!-- Perf4J logger Appender -->
     <appender name="DailyAndSizeRollAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${BASE_LOG_HOME}/springboot-demo.log</file>
+        <file>${BASE_LOG_HOME}/questionnaire.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${BASE_LOG_HOME}/ota_root.%i.%d{yyyy-MM-dd}.log.zip
+            <fileNamePattern>${BASE_LOG_HOME}/questionnaire_root.%i.%d{yyyy-MM-dd}.log.zip
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 200MB -->
@@ -29,6 +29,7 @@
 
     <logger name="com.freefly.questionnaire.mapper" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DailyAndSizeRollAppender"/>
     </logger>
 
     <root level="INFO">
