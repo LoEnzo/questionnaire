@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@Alias("Questionnaire")
+@Alias("SurveyQuestionnaire")
 public class SurveyQuestionnaire {
 
     @ApiModelProperty(value = "问卷表id")
@@ -25,6 +25,9 @@ public class SurveyQuestionnaire {
 
     @ApiModelProperty(value = "问卷标题")
     private String title;
+
+    @ApiModelProperty(value = "问卷表的类型")
+    private String type;
 
     @ApiModelProperty(value = "问卷描述")
     private String description;
