@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freefly.questionnaire.mapper.TemplateMapper">
+
+    <resultMap id="SurveyTemplateResultMap" type="SurveyQuestionnaireTemplate">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="user_number" jdbcType="INTEGER" property="userNumber"/>
+        <collection property="questionnaire_id" ofType="SurveyQuestionnaire" >
+            <id column="id" property="id"/>
+            <result column="title" property="title"/>
+        </collection>
+    </resultMap>
+<!--    <select id="queryTemplateById" resultType="com.freefly.questionnaire.vo.SurveyQuestionnaireTemplate">-->
+<!--        SELECT a.sort,-->
+<!--               a.user_number,-->
+<!--               b.id-->
+<!--        FROM survey_questionnaire_template a-->
+<!--                 inner join-->
+<!--             survey_questionnaire b on a.questionnaire_id = b.id-->
+<!--        where a.id = #{id};-->
+<!--    </select>-->
+</mapper>

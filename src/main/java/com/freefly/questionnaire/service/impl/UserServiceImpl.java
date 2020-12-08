@@ -1,11 +1,12 @@
 package com.freefly.questionnaire.service.impl;
 
-import com.freefly.questionnaire.dto.SurveyUser;
+import com.freefly.questionnaire.vo.SurveyUser;
 import com.freefly.questionnaire.mapper.UserMapper;
 import com.freefly.questionnaire.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -35,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(SurveyUser user) {
         userMapper.updateUserById(user.getUserName(), user.getPassword(), user.getId());
+    }
+
+    @Override
+    public List<SurveyUser> queryAllUser() {
+        return userMapper.queryAllUser();
     }
 
 }

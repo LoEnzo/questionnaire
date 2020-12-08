@@ -43,7 +43,7 @@ mybatis: # mybatis 相关配置
   # mapper相关配置
   mapper-locations: classpath:mapping/*Mapper.xml
   # 批量配置该实体类以类相同的别名
-  type-aliases-package: com.freefly.questionnaire.dto
+  type-aliases-package: com.freefly.questionnaire.vo
 
 # knife4j相关配置 未生效
 knife4j:

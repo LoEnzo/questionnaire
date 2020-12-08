@@ -1,6 +1,6 @@
 package com.freefly.questionnaire;
 
-import com.freefly.questionnaire.dto.SurveyUser;
+import com.freefly.questionnaire.vo.SurveyUser;
 import com.freefly.questionnaire.mapper.UserMapper;
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.freefly.questionnaire.mapper;
 
-import com.freefly.questionnaire.dto.SurveyUser;
+import com.freefly.questionnaire.vo.SurveyUser;
 import com.freefly.questionnaire.mapper.sql.UserSql;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * ProjectName
@@ -34,4 +36,7 @@ public interface UserMapper {
     @UpdateProvider(type = UserSql.class, method = "updateUserById")
     void updateUserById(@Param("name") String name, @Param("password") String password, @Param("id") int id);
 
+    @ResultMap("SurveyUserResultMap")
+    @Select("SELECT * FROM user")
+    List<SurveyUser> queryAllUser();
 }

@@ -1,7 +1,7 @@
 package com.freefly.questionnaire.controller;
 
-import com.freefly.questionnaire.dto.SurveyQuestionnaire;
 import com.freefly.questionnaire.service.QuestionnaireService;
+import com.freefly.questionnaire.vo.SurveyQuestionnaire;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

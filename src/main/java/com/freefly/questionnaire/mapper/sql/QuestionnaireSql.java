@@ -1,5 +1,6 @@
 package com.freefly.questionnaire.mapper.sql;
 
+
 /**
  * ProjectName:
  * ClassName:
@@ -10,11 +11,18 @@ package com.freefly.questionnaire.mapper.sql;
  */
 public class QuestionnaireSql {
 
-    public String addQuestionnaire(){
+    public String addQuestionnaire() {
         return "";
     }
 
-    public String updateQuestionnaire(){
+    public String updateQuestionnaire() {
         return "";
+    }
+
+    public String queryTemplateByKeyWord() {
+        return "SELECT title " +
+                "FROM survey_questionnaire " +
+                "WHERE name " +
+                "LIKE CONCAT ('%',#{name, jdbcType=VARCHAR}, '%')";
     }
 }

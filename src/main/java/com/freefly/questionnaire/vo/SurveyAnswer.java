@@ -1,4 +1,4 @@
-package com.freefly.questionnaire.dto;
+package com.freefly.questionnaire.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

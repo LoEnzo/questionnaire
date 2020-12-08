@@ -1,4 +1,4 @@
-package com.freefly.questionnaire.dto;
+package com.freefly.questionnaire.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * ProjectName:
@@ -40,5 +41,8 @@ public class SurveyQuestionnaire {
 
     @ApiModelProperty(value = "问卷截止时间")
     private LocalDateTime endTime;
+
+    @ApiModelProperty(value = "问卷的问题")
+    private List<SurveyQuestionOption> surveyQuestionOptionList;
 
 }

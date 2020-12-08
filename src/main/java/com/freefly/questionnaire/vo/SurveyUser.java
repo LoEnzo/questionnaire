@@ -1,4 +1,4 @@
-package com.freefly.questionnaire.dto;
+package com.freefly.questionnaire.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import org.apache.ibatis.type.Alias;
 @Getter
 @Setter
 @Alias("SurveyUser")
-public class SurveyUser {
+public class SurveyUser{
 
     @ApiModelProperty(value = "用户id")
     private int id;

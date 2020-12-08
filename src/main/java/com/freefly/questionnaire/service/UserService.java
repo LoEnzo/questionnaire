@@ -1,7 +1,9 @@
 package com.freefly.questionnaire.service;
 
-import com.freefly.questionnaire.dto.SurveyUser;
+import com.freefly.questionnaire.vo.SurveyUser;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserService {
@@ -11,4 +13,6 @@ public interface UserService {
     SurveyUser queryUser(int id);
 
     void updateUser(SurveyUser user);
+
+    List<SurveyUser> queryAllUser();
 }
