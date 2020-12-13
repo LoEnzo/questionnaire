@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ProjectName:
@@ -37,16 +38,15 @@ public class TemplateController {
     private TemplateService templateService;
 
     @GetMapping("/{tempId}")
-    @ApiOperation(value = "查询模板库问卷信息", notes = "根据问卷表id查询具体某个模板问卷的信息")
-    public ResponseEntity getTemplateDetail(@PathVariable int tempId) {
-//        SurveyQuestionnaire questionnaire = questionnaireService.queryQuestionnaire(tempId);
-        SurveyQuestionnaireTemplate templates = templateService.queryTemplateById(tempId);
+    @ApiOperation(value = "查询模板库问卷详细信息", notes = "根据模板库id查询具体某个模板问卷的信息")
+    public ResponseEntity<ResultEntity<SurveyQuestionnaire>> getTemplateDetail(@PathVariable int tempId) {
+        SurveyQuestionnaire templates = templateService.queryTemplateDetailById(tempId);
         return new ResponseEntity<>(ResultEntity.successWithData(HttpStatus.OK.value(), templates), HttpStatus.OK);
     }
 
     @GetMapping
-    @ApiOperation(value = "查询模板信息", notes = "根据关键字模糊查询模板库信息")
-    public ResponseEntity getTemplates(@RequestParam String keyWord) {
+    @ApiOperation(value = "查询模板关键字信息", notes = "根据关键字模糊查询模板库信息")
+    public ResponseEntity<ResultEntity> getTemplates(@RequestParam String keyWord) {
         SurveyQuestionnaireTemplate surveyQuestionnaireTemplate = templateService.queryTemplates(keyWord);
         if (null != surveyQuestionnaireTemplate) {
             return ResponseEntity.ok(ResultEntity.successWithData(HttpStatus.OK.value(), surveyQuestionnaireTemplate));

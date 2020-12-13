@@ -23,6 +23,9 @@ public class SurveyQuestionnaireTemplate {
     @ApiModelProperty(value = "问卷表模板库的id")
     private int id;
 
+    @ApiModelProperty(value = "问卷模板的名称")
+    private String name;
+
     @ApiModelProperty(value = "问卷表的排序")
     private int sort;
 

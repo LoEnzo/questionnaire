@@ -28,16 +28,12 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public SurveyQuestionnaireTemplate queryTemplates(String keyWord) {
-        return templateMapper.queryTemplateByKerWord(keyWord);
+        return templateMapper.queryTemplateByKeyWord(keyWord);
     }
 
     @Override
-    public SurveyQuestionnaireTemplate queryTemplateById(int id) {
-        // 根据模板id查询模板库信息
-        SurveyQuestionnaireTemplate template = templateMapper.queryTemplateById(id);
-//        SurveyQuestionnaire surveyQuestionnaire =
-//                questionnaireMapper.queryQuestionnaireById(template.getQuestionnaire_id());
-//        template.getSurveyQuestionnaireList().add(surveyQuestionnaire);
-        return template;
+    public SurveyQuestionnaire queryTemplateDetailById(int id) {
+        // 根据模板id查询模板库问卷表详细信息
+        return questionnaireMapper.queryQuestionnaireByTempId(id);
     }
 }

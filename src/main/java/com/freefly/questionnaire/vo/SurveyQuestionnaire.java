@@ -42,7 +42,10 @@ public class SurveyQuestionnaire {
     @ApiModelProperty(value = "问卷截止时间")
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "问卷的问题")
+    @ApiModelProperty(value = "问卷表对应模板库的id")
+    private int tempId;
+
+    @ApiModelProperty(value = "问卷的问题集合")
     private List<SurveyQuestionOption> surveyQuestionOptionList;
 
 }

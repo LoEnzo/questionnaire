@@ -5,6 +5,7 @@ import com.freefly.questionnaire.vo.SurveyQuestionnaire;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper
 public interface QuestionnaireMapper {
@@ -29,6 +30,9 @@ public interface QuestionnaireMapper {
     @ResultMap("SurveyQuestionnaireResultMap")
     @Select("SELECT * FROM survey_questionnaire WHERE id = #{id, jdbcType=INTEGER}")
     SurveyQuestionnaire queryQuestionnaireById(int id);
+
+    @ResultMap("SurveyQuestionnaireResultMap")
+    SurveyQuestionnaire queryQuestionnaireByTempId(int id);
 
     @SelectProvider(type = QuestionnaireSql.class, method = "queryTemplateByKeyWord")
     SurveyQuestionnaire queryQuestionnaireByKeyWord(String keyWord);
