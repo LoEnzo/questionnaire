@@ -95,30 +95,6 @@
         </dependency>
     </dependencies>
 
-    <!--分别设置开发，测试，生产环境-->
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <spring.active>dev</spring.active>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <spring.active>test</spring.active>
-            </properties>
-        </profile>
-        <profile>
-            <id>pro</id>
-            <properties>
-                <spring.active>pro</spring.active>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <finalName>questionnaire</finalName>

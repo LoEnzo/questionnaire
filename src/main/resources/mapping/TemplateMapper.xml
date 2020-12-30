@@ -10,7 +10,7 @@
         <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaire_id"/>
     </resultMap>
 
-    <resultMap id="SurveyTemplateResultMap" type="SurveyQuestionnaireTemplate" >
+    <resultMap id="SurveyTemplateResultMap" type="SurveyQuestionnaireTemplate">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="user_number" jdbcType="INTEGER" property="userNumber"/>
@@ -19,7 +19,7 @@
             <result column="title" property="title"/>
         </collection>
     </resultMap>
-    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap" >
+    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap">
         SELECT sqt.id, sqt.name, sqt.user_number, sq.id sq_id, sq.title
         FROM survey_questionnaire_template sqt
                  INNER JOIN survey_questionnaire sq on sqt.id = sq.id
