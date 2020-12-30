@@ -12,6 +12,12 @@ Springboot+mybatis+logback
 
 * mvn clean package 打包，通过执行`java -jar questionnaire.jar`启动
 
+### 多环境启动
+
+根据`application-{配置参数}.yml`执行启动指令;
+
+`java -jar questionnaire.jar --spring.profiles.active={配置参数}`
+
 ### api文档
 
 项目启动后，访问`http://localhost:8080/questionnaire/doc.html`即可
