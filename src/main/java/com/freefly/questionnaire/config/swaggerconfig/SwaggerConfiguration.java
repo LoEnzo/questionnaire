@@ -25,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfiguration {
     @Bean(value = "defaultApi2")
     public Docket defaultApi2() {
-        Docket docket=new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 //分组名称
                 .groupName("1.0版本")
@@ -34,7 +34,6 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.freefly.questionnaire.controller"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
     }
 
     private ApiInfo apiInfo(){

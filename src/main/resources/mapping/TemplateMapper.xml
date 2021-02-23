@@ -7,7 +7,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="user_number" jdbcType="INTEGER" property="userNumber"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
-        <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaire_id"/>
+        <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId"/>
     </resultMap>
 
     <resultMap id="SurveyTemplateResultMap" type="SurveyQuestionnaireTemplate">
@@ -19,10 +19,11 @@
             <result column="title" property="title"/>
         </collection>
     </resultMap>
-    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap">
+    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap" >
         SELECT sqt.id, sqt.name, sqt.user_number, sq.id sq_id, sq.title
         FROM survey_questionnaire_template sqt
-                 INNER JOIN survey_questionnaire sq on sqt.id = sq.id
-        WHERE sq.title LIKE CONCAT('%', #{keyWord}, '%');
+        INNER JOIN survey_questionnaire sq on sqt.id = sq.id
+        <if test="keyWord != null and keyWord != ''">WHERE sq.title LIKE CONCAT('%', #{keyWord}, '%');</if>
     </select>
+
 </mapper>

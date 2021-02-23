@@ -33,6 +33,9 @@ public class SurveyQuestionnaire {
     @ApiModelProperty(value = "问卷描述")
     private String description;
 
+    @ApiModelProperty(value = "问题的个数")
+    private int total;
+
     @ApiModelProperty(value = "问卷状态，0：未投递，1：已投递，2：已截止")
     private int status;
 

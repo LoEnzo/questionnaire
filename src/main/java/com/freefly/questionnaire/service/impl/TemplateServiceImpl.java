@@ -8,6 +8,7 @@ import com.freefly.questionnaire.vo.SurveyQuestionnaireTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ProjectName:
@@ -27,8 +28,13 @@ public class TemplateServiceImpl implements TemplateService {
     private QuestionnaireMapper questionnaireMapper;
 
     @Override
-    public SurveyQuestionnaireTemplate queryTemplates(String keyWord) {
+    public List<SurveyQuestionnaireTemplate> queryTemplates(String keyWord) {
         return templateMapper.queryTemplateByKeyWord(keyWord);
+    }
+
+    @Override
+    public SurveyQuestionnaireTemplate queryTemplates() {
+        return templateMapper.queryTemplateByKeyWord();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class SurveyQuestionnaireTemplate {
     private int sort;
 
     @ApiModelProperty(value = "问卷表id")
-    private int questionnaire_id;
+    private int questionnaireId;
 
     @ApiModelProperty(value = "问卷表模板的使用人数")
     private int userNumber;
