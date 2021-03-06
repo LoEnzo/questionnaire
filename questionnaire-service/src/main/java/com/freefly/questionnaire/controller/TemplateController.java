@@ -37,7 +37,7 @@ public class TemplateController {
     @Resource
     private TemplateService templateService;
 
-    @RequestMapping("/templateDetail/{tempId}")
+    @GetMapping("/templateDetail/{tempId}")
     @ApiOperation(value = "查询模板库问卷详细信息", notes = "根据模板库id查询具体某个模板问卷的信息")
     public ResponseEntity<ResultEntity<SurveyQuestionnaire>> getTemplateDetail(@PathVariable int tempId) {
         SurveyQuestionnaire templates = templateService.queryTemplateDetailById(tempId);
@@ -45,7 +45,7 @@ public class TemplateController {
         return new ResponseEntity<>(ResultEntity.successWithData(HttpStatus.OK.value(), templates), HttpStatus.OK);
     }
 
-    @RequestMapping("/templates")
+    @GetMapping("/templates")
     @ApiOperation(value = "查询模板关键字信息", notes = "根据关键字模糊查询模板库信息")
     public ResponseEntity<ResultEntity> getTemplates(@RequestParam(value = "keyWord", required = false) String keyWord) {
         List<SurveyQuestionnaireTemplate> surQueTemplateList = templateService.queryTemplates(keyWord);

@@ -58,8 +58,8 @@ public class UserController {
         LOGGER.info("Success");
     }
 
-    @ApiOperation(value = "更新用户信息")
     @PutMapping
+    @ApiOperation(value = "更新用户信息")
     public void updateUser(SurveyUser user) {
         userService.updateUser(user);
     }

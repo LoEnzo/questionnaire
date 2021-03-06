@@ -22,13 +22,6 @@ spring:
   aop:
     auto: true
     proxy-target-class: false
-  #  mvc:
-  #    formcontent:
-  #      filter:
-  #        enabled: true
-  #    hiddenmethod:
-  #      filter:
-  #        enabled: false
 
   lifecycle:
     timeout-per-shutdown-phase: 60s

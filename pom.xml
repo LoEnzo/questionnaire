@@ -6,8 +6,9 @@
     <groupId>com.freefly.questionnaire</groupId>
     <artifactId>questionnaire</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>questionnaire</name>
+    <name>QuestionnaireProject</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>pom</packaging>
 
     <modules>
         <module>questionnaire-service</module>
