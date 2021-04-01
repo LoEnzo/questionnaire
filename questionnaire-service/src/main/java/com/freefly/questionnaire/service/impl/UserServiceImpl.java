@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SurveyUser queryUser(int id) {
-        return userMapper.queryUserById(id);
+        return userMapper.selectById(id);
     }
 
     @Override

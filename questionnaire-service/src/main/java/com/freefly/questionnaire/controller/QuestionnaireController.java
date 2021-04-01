@@ -4,6 +4,7 @@ import com.freefly.questionnaire.service.QuestionnaireService;
 import com.freefly.questionnaire.vo.SurveyQuestionnaire;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,8 @@ import javax.annotation.Resource;
 @CrossOrigin(origins = "*")
 @RequestMapping("/que")
 @Api(tags = "问卷表信息")
+@Slf4j
 public class QuestionnaireController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private QuestionnaireService questionnaireService;
@@ -32,7 +32,7 @@ public class QuestionnaireController {
     @ApiOperation(value = "查询问卷表")
     @GetMapping(value = "/{queId}")
     public SurveyQuestionnaire queryQuestionnaire(@PathVariable int queId) {
-        LOGGER.info("SUCCESS");
+        log.info("SUCCESS");
         return questionnaireService.queryQuestionnaire(queId);
     }
 

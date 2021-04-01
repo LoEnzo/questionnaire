@@ -1,5 +1,7 @@
 package com.freefly.questionnaire.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.freefly.questionnaire.mapper.QuestionnaireMapper;
 import com.freefly.questionnaire.mapper.TemplateMapper;
 import com.freefly.questionnaire.service.TemplateService;
@@ -29,17 +31,17 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public List<SurveyQuestionnaireTemplate> queryTemplates(String keyWord) {
-        return templateMapper.queryTemplateByKeyWord(keyWord);
-    }
 
-    @Override
-    public SurveyQuestionnaireTemplate queryTemplates() {
-        return templateMapper.queryTemplateByKeyWord();
+        return templateMapper.queryTemplateByKeyWord(keyWord,
+                new QueryWrapper<SurveyQuestionnaireTemplate>()
+                        .like(StringUtils.isNotBlank(keyWord), "sq.title", keyWord));
     }
 
     @Override
     public SurveyQuestionnaire queryTemplateDetailById(int id) {
-        // 根据模板id查询模板库问卷表详细信息
-        return questionnaireMapper.queryQuestionnaireByTempId(id);
+
+        return questionnaireMapper.queryQuestionnaireByTempId(id,
+                new QueryWrapper<SurveyQuestionnaire>()
+                        .eq("template_id", id));
     }
 }

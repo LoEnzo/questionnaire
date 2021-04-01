@@ -9,7 +9,5 @@ public interface TemplateService {
 
     List<SurveyQuestionnaireTemplate> queryTemplates(String keyWord);
 
-    SurveyQuestionnaireTemplate queryTemplates();
-
     SurveyQuestionnaire queryTemplateDetailById(int id);
 }

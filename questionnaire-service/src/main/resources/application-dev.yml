@@ -26,22 +26,57 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 60s
   datasource:  # 数据库设置
-    url: jdbc:mysql://localhost:3306/questionnaire?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=CST
+    url: jdbc:mysql://localhost:3306/questionnaire?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 813256
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    # 密码根据你的配置填写
+    password: 123456
+    # redis主机IP
+    host: 127.0.0.1
 
 
-mybatis: # mybatis 相关配置
-  # mapper相关配置
+#mybatis: # mybatis 相关配置
+#  # mapper相关配置
+#  mapper-locations: classpath:mapping/*Mapper.xml
+#  # 批量配置该实体类以类相同的别名
+#  type-aliases-package: com.freefly.questionnaire.vo
+
+# mybatis-plus 相关配置
+mybatis-plus:
   mapper-locations: classpath:mapping/*Mapper.xml
-  # 批量配置该实体类以类相同的别名
   type-aliases-package: com.freefly.questionnaire.vo
 
 # knife4j相关配置 未生效
-knife4j:
-  production: true
-  basic:  # 开启Swagger的Basic认证功能,默认是false
-    enable: true   # Basic认证用户名
-    username: hjwu # Basic用户名
-    password: hjwu   # Basic认证密码
+#knife4j:
+#  production: true
+#  basic:  # 开启Swagger的Basic认证功能,默认是false
+#    enable: true   # Basic认证用户名
+#    username: hjwu # Basic用户名
+#    password: hjwu   # Basic认证密码
+
+# ApiBoot相关配置
+api:
+  boot:
+    security:
+      # 配置内存安全用户列表
+#      users:
+#        - username: admin
+#          password: 123456
+#      auth-prefix:
+#        - /templates/**
+
+      away: jdbc
+      enable-default-store-delegate: false   # 禁用默认内存方式读取用户方式
+    oauth:
+      # 开启使用redis存储token
+      away: redis
+      # 启用jwt
+#      jwt:
+#        enable: true
+      # 配置oauth2客户端列表
+#      clients:
+#        - client-id: ApiBoot
+#          client-secret: ApiBootSecret
+#      scopes: templates

@@ -40,7 +40,7 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("Questionnaire接口文档！！！")
                 .description("Questionnaire 问卷调查 接口文档！！！")
-                .termsOfServiceUrl("http://localhost:9999/")
+                .termsOfServiceUrl("http://localhost:8080/")
 //                .contact("123@qq.com")
                 .version("1.0")
                 .build();

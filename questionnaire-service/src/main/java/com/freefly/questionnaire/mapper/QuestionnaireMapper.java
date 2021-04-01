@@ -1,11 +1,13 @@
 package com.freefly.questionnaire.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.freefly.questionnaire.mapper.sql.QuestionnaireSql;
 import com.freefly.questionnaire.vo.SurveyQuestionnaire;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Mapper
 public interface QuestionnaireMapper {
@@ -31,9 +33,10 @@ public interface QuestionnaireMapper {
     @Select("SELECT * FROM survey_questionnaire WHERE id = #{id, jdbcType=INTEGER}")
     SurveyQuestionnaire queryQuestionnaireById(int id);
 
-    @ResultMap("SurveyQuestionnaireResultMap")
-    SurveyQuestionnaire queryQuestionnaireByTempId(int id);
+
+    SurveyQuestionnaire queryQuestionnaireByTempId(int id, @Param(Constants.WRAPPER) Wrapper wrapper);
 
     @SelectProvider(type = QuestionnaireSql.class, method = "queryTemplateByKeyWord")
     SurveyQuestionnaire queryQuestionnaireByKeyWord(String keyWord);
+
 }

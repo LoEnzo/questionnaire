@@ -16,14 +16,18 @@
         <result column="user_number" jdbcType="INTEGER" property="userNumber"/>
         <collection property="surveyQuestionnaireList" ofType="SurveyQuestionnaire" javaType="java.util.List">
             <id column="sq_id" property="id"/>
-            <result column="title" property="title"/>
+            <result column="sq_title" property="title"/>
         </collection>
     </resultMap>
-    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap" >
-        SELECT sqt.id, sqt.name, sqt.user_number, sq.id sq_id, sq.title
+
+    <select id="queryTemplateByKeyWord" resultMap="SurveyTemplateResultMap">
+        SELECT sqt.id, sqt.name, sqt.user_number, sq.id sq_id, sq.title sq_title
         FROM survey_questionnaire_template sqt
         INNER JOIN survey_questionnaire sq on sqt.id = sq.id
-        <if test="keyWord != null and keyWord != ''">WHERE sq.title LIKE CONCAT('%', #{keyWord}, '%');</if>
+        ${ew.customSqlSegment}
+
+        <!--  旧版   <if test="keyWord != null and keyWord != ''">WHERE sq.title LIKE CONCAT('%', #{keyWord}, '%');
+        </if>-->
     </select>
 
 </mapper>

@@ -22,17 +22,18 @@
     <!--  根据模板id查询对应模板问卷的基本信息  -->
     <select id="queryQuestionnaireByTempId" resultMap="SurveyQuestionnaireResultMap">
         SELECT sqn.id,
-               sqn.title,
-               sqn.type,
-               sqn.description,
-               sq.id    sq_id,
-               sq.title sq_title,
-               sq.type  sq_type,
-               sq.sort
+        sqn.title,
+        sqn.type,
+        sqn.description,
+        sq.id sq_id,
+        sq.title sq_title,
+        sq.type sq_type,
+        sq.sort
         FROM survey_questionnaire sqn
-                 inner join
-             survey_question sq on
-                 sqn.id = sq.qutionnaire_id
-        WHERE template_id = #{id, jdbcType=INTEGER}
+        inner join
+        survey_question sq on
+        sqn.id = sq.qutionnaire_id
+        ${ew.customSqlSegment}
+        <!--  旧版 WHERE template_id = #{id, jdbcType=INTEGER} -->
     </select>
 </mapper>
